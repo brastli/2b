@@ -3,7 +3,7 @@
 // Group Number: 6
 // Problem Set: Project 2
 // File contains functions for readWords, an operator overload for <<,
-// sortWords, wordLookup, loadFromFile, getLetter, getSize, findMatches, and search
+// readWords, sortWords, wordLookup, quicksort, heapsort
 
 #include "Code.h"
 
