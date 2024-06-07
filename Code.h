@@ -9,106 +9,60 @@
 #define EECE2560_PROJECT2_CODE_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include "d_matrix.h"
+#include "heap.h"
+#include "d_except.h"
 
 using namespace std;
 
 class dictionary {
-
 private:
-    
-    vector<string> wordList;        // The list of words in the dictionary
-    vector<string> words;           // Vector to store the words
+    vector<string> wordList;
+    vector<string> words;
 
 public:
-
-    // Takes an txt file and reads each line into the wordList
     void readWords(const string& file);
-
-    // Overloaded output operator to print the word list
-    friend ostream& operator<<(ostream& os, const dictionary& words);
-
-    // Sorts the words in the dictionary using selection sort
+    friend ostream& operator<<(ostream& os, const dictionary& dict);
     void sortWords();
-
-    // Handles word lookups using binary search
     bool wordLookup(const string& word) const;
 
-     Dictionary(string filename) {
-        ifstream file(filename); // Open the file
-        if (file.is_open()) { // Check if the file is successfully opened
+    dictionary(const string& filename) {
+        ifstream file(filename);
+        if (file.is_open()) {
             string word;
-            while (getline(file, word)) { // Read each word from the file
-                if (word.length() >= 5) { // Check if the word length is at least 5
-                    words.push_back(word); // Add the word to the list
+            while (getline(file, word)) {
+                if (word.length() >= 5) {
+                    words.push_back(word);
                 }
             }
-            file.close(); // Close the file
+            file.close();
         } else {
-            cerr << "Unable to open file: " << filename << endl; // Error message if file cannot be opened
+            cerr << "Unable to open file: " << filename << endl;
         }
     }
 
-    // Public method to sort words using quicksort
-    void quicksort(int left, int right) {
-        if (left >= right) { // Base case: if the segment size is 1 or zero
-            return;
-        }
-        // Choose pivot element
-        string pivot = words[(left + right) / 2];
-        int i = left;
-        int j = right;
-        while (i <= j) {
-            // Move left pointer to the right until an element >= pivot is found
-            while (words[i] < pivot) {
-                i++;
-            }
-            // Move right pointer to the left until an element <= pivot is found
-            while (words[j] > pivot) {
-                j--;
-            }
-            // Swap elements and move pointers inward
-            if (i <= j) {
-                swap(words[i], words[j]);
-                i++;
-                j--;
-            }
-        }
-        // Recursively sort the left and right subarrays
-        quicksort(left, j);
-        quicksort(i, right);
+    void quicksort(int left, int right);
+    void heapsort();
 };
 
 class Grid {
-
 private:
-
-    matrix<char> grid;      // The grid matrix
-    int size;               // The size of the n x n matrix
+    matrix<char> grid;
+    int size;
 
 public:
-
-    // Constructor
     Grid(int n);
-
-    // Loads the grid from a file and stores it into a matrix
     void loadFromFile(const string& file);
-
-    // Gets an individual character from the matrix
     char getLetter(int i, int j) const;
-
-    // Returns the size of the grid
     int getSize() const;
-
 };
 
-// Global function that finds words from the grid that can be found in the dictionary
 void findMatches(const dictionary& dict, const Grid& grid);
-
-// Global function that reads the name of the grid file from the keyboard, reads data from the input files, and prints
-// out candidate words
 void search();
+void search(int algorithm);
+void printWordsFound(vector<string>& wordsFound);
 
-#endif
+#endif	// EECE2560_PROJECT2_CODE_H
