@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "Code.h"
 using namespace std;
 
@@ -240,3 +241,102 @@ void dictionary::heapsort() {
     }
 }
 
+void printWordsFound(vector<string>& wordsFound);
+
+// Function to search for words in the grid
+void search(int algorithm)
+{
+    // Prompt the user for the grid file name
+    string gridFileName;
+    cout << "Enter the name of the grid file: ";
+    cin >> gridFileName;
+
+    // Open the grid file
+    ifstream gridFile(gridFileName);
+    if (!gridFile) // Check if the file opened successfully
+    {
+        cout << "Error: unable to open grid file." << endl;
+        return;
+    }
+
+    // Read the size of the grid
+    int n;
+    gridFile >> n;
+
+    // Read the grid itself
+    vector<vector<char>> grid(n, vector<char>(n));
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            gridFile >> grid[i][j];
+        }
+    }
+
+    // Prompt the user for the word list file name
+    string wordListFileName;
+    cout << "Enter the name of the word list file: ";
+    cin >> wordListFileName;
+
+    // Open the word list file
+    ifstream wordListFile(wordListFileName);
+    if (!wordListFile) // Check if the file opened successfully
+    {
+        cout << "Error: unable to open word list file." << endl;
+        return;
+    }
+
+    // Read the word list
+    vector<string> wordList;
+    string word;
+    while (wordListFile >> word)
+    {
+        wordList.push_back(word);
+    }
+
+    // Create a dictionary object and sort the word list using the specified algorithm
+    dictionary dict;
+    if (algorithm == 1)
+    {
+        dict.quickSort(wordList); // Sort using quicksort
+    }
+    else if (algorithm == 2)
+    {
+        dict.heapSort(wordList); // Sort using heapsort
+    }
+    else
+    {
+        cout << "Error: invalid sorting algorithm." << endl;
+        return;
+    }
+
+    // Search for words in the grid
+    vector<string> wordsFound;
+    for (string word : wordList)
+    {
+        if (dict.binarySearch(word, grid)) // Use binary search to find the word in the grid
+        {
+            wordsFound.push_back(word); // Add found word to the list
+        }
+    }
+
+    // Print out the words found
+    printWordsFound(wordsFound);
+}
+
+// Function to print out the words found
+void printWordsFound(vector<string>& wordsFound)
+{
+    if (wordsFound.empty())
+    {
+        cout << "No words found." << endl;
+    }
+    else
+    {
+        cout << "Words found:" << endl;
+        for (string word : wordsFound)
+        {
+            cout << word << endl;
+        }
+    }
+}
