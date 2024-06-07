@@ -1,3 +1,10 @@
+// Name: Sofia Kolobaev, Page Patterson, Minghao Zhu
+// Group ID: kolpatzhu
+// Group Number: 6
+// Problem Set: Project 2
+// Header file Code.h. Contains class definitions for dictionary, grid
+
+
 #include "Code.h"
 
 // Constructor to initialize the grid with given size n
