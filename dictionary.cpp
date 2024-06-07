@@ -2,7 +2,7 @@
 // Group ID: kolpatzhu
 // Group Number: 6
 // Problem Set: Project 2
-// File contains functions for readWords, an operator overload for <<,
+// File contains functions for dictionary, an operator overload for <<,
 // readWords, sortWords, wordLookup, quicksort, heapsort
 
 #include "Code.h"
