@@ -18,8 +18,9 @@ using namespace std;
 class dictionary {
 
 private:
-
+    
     vector<string> wordList;        // The list of words in the dictionary
+    vector<string> words;
 
 public:
 
@@ -34,6 +35,46 @@ public:
 
     // Handles word lookups using binary search
     bool wordLookup(const string& word) const;
+
+        Dictionary(string filename) {
+        ifstream file(filename);
+        if (file.is_open()) {
+            string word;
+            while (getline(file, word)) {
+                if (word.length() >= 5) {
+                    words.push_back(word);
+                }
+            }
+            file.close();
+        } else {
+            cerr << "Unable to open file: " << filename << endl;
+        }
+    }
+
+    // Sort words using quicksort
+    void quicksort(int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        string pivot = words[(left + right) / 2];
+        int i = left;
+        int j = right;
+        while (i <= j) {
+            while (words[i] < pivot) {
+                i++;
+            }
+            while (words[j] > pivot) {
+                j--;
+            }
+            if (i <= j) {
+                swap(words[i], words[j]);
+                i++;
+                j--;
+            }
+        }
+        quicksort(left, j);
+        quicksort(i, right);
+    }
 };
 
 class Grid {
