@@ -2,8 +2,8 @@
 // Group ID: kolpatzhu
 // Group Number: 6
 // Problem Set: Project 2
-// Header file Code.h. Contains class definitions for dictionary, grid
-
+// File contains functions for Grid,
+// loadFromFile, getLetter, getSize
 
 #include "Code.h"
 
