@@ -5,64 +5,69 @@
 // File contains functions for readWords, an operator overload for <<,
 // sortWords, wordLookup, loadFromFile, getLetter, getSize, findMatches, and search
 
-#ifndef EECE2560_PROJECT2_CODE_H
-#define EECE2560_PROJECT2_CODE_H
+#include "Code.h"
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include "d_matrix.h"
-#include "heap.h"
-#include "d_except.h"
-
-using namespace std;
-
-class dictionary {
-private:
-    vector<string> wordList;
-    vector<string> words;
-
-public:
-    void readWords(const string& file);
-    friend ostream& operator<<(ostream& os, const dictionary& dict);
-    void sortWords();
-    bool wordLookup(const string& word) const;
-
-    dictionary(const string& filename) {
-        ifstream file(filename);
-        if (file.is_open()) {
-            string word;
-            while (getline(file, word)) {
-                if (word.length() >= 5) {
-                    words.push_back(word);
-                }
-            }
-            file.close();
-        } else {
-            cerr << "Unable to open file: " << filename << endl;
+// Reads words from the specified file and adds words of length >= 5 to wordList
+void dictionary::readWords(const string& file) {
+    ifstream inFile(file);
+    if (!inFile) {
+        throw fileOpenError(file); // Throw an error if the file cannot be opened
+    }
+    string word;
+    while (inFile >> word) {
+        if (word.length() >= 5) {
+            wordList.push_back(word); // Add words of length >= 5 to wordList
         }
     }
+    inFile.close();
+}
 
-    void quicksort(int left, int right);
-    void heapsort();
-};
+// Overloaded output stream operator to print the dictionary word list
+ostream& operator<<(ostream& os, const dictionary& dict) {
+    for (const string& word : dict.wordList) {
+        os << word << endl; // Print each word in wordList
+    }
+    return os;
+}
 
-class Grid {
-private:
-    matrix<char> grid;
-    int size;
+// Sorts the wordList using the standard library sort function
+void dictionary::sortWords() {
+    sort(wordList.begin(), wordList.end());
+}
 
-public:
-    Grid(int n);
-    void loadFromFile(const string& file);
-    char getLetter(int i, int j) const;
-    int getSize() const;
-};
+// Checks if the specified word exists in the sorted wordList using binary search
+bool dictionary::wordLookup(const string& word) const {
+    return binary_search(wordList.begin(), wordList.end(), word);
+}
 
-void findMatches(const dictionary& dict, const Grid& grid);
-void search();
-void search(int algorithm);
-void printWordsFound(vector<string>& wordsFound);
+// Sorts the wordList using the quicksort algorithm
+void dictionary::quicksort(int left, int right) {
+    if (left < right) {
+        int i = left, j = right;
+        string pivot = wordList[(left + right) / 2]; // Choose the middle element as the pivot
+        while (i <= j) {
+            while (wordList[i] < pivot) i++; // Find an element larger than or equal to pivot
+            while (wordList[j] > pivot) j--; // Find an element smaller than or equal to pivot
+            if (i <= j) {
+                swap(wordList[i], wordList[j]); // Swap elements to partition the list
+                i++;
+                j--;
+            }
+        }
+        quicksort(left, j); // Recursively sort the left partition
+        quicksort(i, right); // Recursively sort the right partition
+    }
+}
 
-#endif	// EECE2560_PROJECT2_CODE_H
+// Sorts the wordList using the heapsort algorithm
+void dictionary::heapsort() {
+    heap<string> h;
+    for (const string& word : wordList) {
+        h.insert(word); // Insert all words into the heap
+    }
+    h.initializeMaxHeap(); // Initialize the max-heap
+    wordList.clear(); // Clear the original wordList
+    while (h.size() > 0) {
+        wordList.push_back(h.extractMax()); // Extract max elements from the heap and append to wordList
+    }
+}
