@@ -2,8 +2,8 @@
 // Group ID: kolpatzhu
 // Group Number: 6
 // Problem Set: Project 2
-// Header file Code.h. Contains class definitions for dictionary, grid, and the
-// global functions findMatches and search
+// Header file heap.h. Contains class definitions for heap
+
 
 #ifndef HEAP_CLASS
 #define HEAP_CLASS
