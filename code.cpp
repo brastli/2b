@@ -9,7 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "code.h"
+#include "Code.h"
 using namespace std;
 
 // Reads words from the dictionary file
