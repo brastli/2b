@@ -4,11 +4,6 @@
 // Problem Set: Project 2
 // Main program file for Project 2
 
-// Name: Sofia Kolobaev, Page Patterson, Minghao Zhu
-// Group ID: kolpatzhu
-// Group Number: 6
-// Problem Set: Project 2
-// Main program file for Project 2
 
 #include "Code.h"
 
