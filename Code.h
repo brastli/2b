@@ -2,8 +2,7 @@
 // Group ID: kolpatzhu
 // Group Number: 6
 // Problem Set: Project 2
-// Header file Code.h. Contains class definitions for dictionary, grid, and the
-// global functions findMatches and search
+// Header file Code.h. Contains class definitions for dictionary, grid
 
 #ifndef EECE2560_PROJECT2_CODE_H
 #define EECE2560_PROJECT2_CODE_H
