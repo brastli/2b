@@ -223,4 +223,20 @@ void search()
     findMatches(dict, grid);
 }
 
+void dictionary::heapsort() {
+    // Create a max heap using the words in the dictionary
+    heap<string> max_heap;
+    // Insert each word from the dictionary into the max heap
+    for (const auto& word : words) {
+        max_heap.insert(word);
+    }
+    // Build the max heap to ensure heap properties are satisfied
+    max_heap.buildMaxHeap();
+
+    // Sort the words in descending order
+    // Extract the maximum element from the heap and place it at the end of the array
+    for (int i = words.size() - 1; i >= 0; i--) {
+        words[i] = max_heap.extractMax();
+    }
+}
 
