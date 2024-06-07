@@ -5,7 +5,8 @@
 // Main program file for Project 2
 
 #include <iostream>
-#include "Code.h"
+#include "grid.h"
+#include "dictionary.h"
 
 using namespace std;
 
