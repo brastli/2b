@@ -5,8 +5,8 @@
 // Header file Code.h. Contains class definitions for dictionary, grid, and the
 // global functions findMatches and search
 
-#ifndef EECE2560_PROJECT2_CODE_H
-#define EECE2560_PROJECT2_CODE_H
+#ifndef EECE2560_PROJECT2_DICTIONARY_H
+#define EECE2560_PROJECT2_DICTIONARY_H
 
 #include <iostream>
 #include <string>
