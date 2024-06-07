@@ -20,7 +20,7 @@ class dictionary {
 private:
     
     vector<string> wordList;        // The list of words in the dictionary
-    vector<string> words;
+    vector<string> words;           // Vector to store the words
 
 public:
 
@@ -36,45 +36,49 @@ public:
     // Handles word lookups using binary search
     bool wordLookup(const string& word) const;
 
-        Dictionary(string filename) {
-        ifstream file(filename);
-        if (file.is_open()) {
+     Dictionary(string filename) {
+        ifstream file(filename); // Open the file
+        if (file.is_open()) { // Check if the file is successfully opened
             string word;
-            while (getline(file, word)) {
-                if (word.length() >= 5) {
-                    words.push_back(word);
+            while (getline(file, word)) { // Read each word from the file
+                if (word.length() >= 5) { // Check if the word length is at least 5
+                    words.push_back(word); // Add the word to the list
                 }
             }
-            file.close();
+            file.close(); // Close the file
         } else {
-            cerr << "Unable to open file: " << filename << endl;
+            cerr << "Unable to open file: " << filename << endl; // Error message if file cannot be opened
         }
     }
 
-    // Sort words using quicksort
+    // Public method to sort words using quicksort
     void quicksort(int left, int right) {
-        if (left >= right) {
+        if (left >= right) { // Base case: if the segment size is 1 or zero
             return;
         }
+        // Choose pivot element
         string pivot = words[(left + right) / 2];
         int i = left;
         int j = right;
         while (i <= j) {
+            // Move left pointer to the right until an element >= pivot is found
             while (words[i] < pivot) {
                 i++;
             }
+            // Move right pointer to the left until an element <= pivot is found
             while (words[j] > pivot) {
                 j--;
             }
+            // Swap elements and move pointers inward
             if (i <= j) {
                 swap(words[i], words[j]);
                 i++;
                 j--;
             }
         }
+        // Recursively sort the left and right subarrays
         quicksort(left, j);
         quicksort(i, right);
-    }
 };
 
 class Grid {
