@@ -9,8 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "grid.h"
-#include "dictionary.h"
+#include "code.h"
 using namespace std;
 
 // Reads words from the dictionary file
